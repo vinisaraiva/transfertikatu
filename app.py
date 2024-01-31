@@ -8,8 +8,8 @@ import os
 
 # Escopos e ID da planilha
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-SAMPLE_SPREADSHEET_ID = '1c03q-w3ydDjY7Gy3lJPzho69d2LYq8z7GhpE4aCp33U'
-SAMPLE_RANGE_NAME = 'Página1!A1:C14'
+SAMPLE_SPREADSHEET_ID = '1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE'
+SAMPLE_RANGE_NAME = 'Página1'
 
 def authenticate_google_sheets():
     creds = None
