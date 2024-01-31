@@ -13,10 +13,10 @@ def authenticate_google_sheets():
     client = gspread.authorize(creds)
     return client
 
-def upload_data_to_sheet(client, data_list, sheet_url):
+def upload_data_to_sheet(client, data_list, sheet_id, sheet_name):
     try:
-        sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0')
-        worksheet = sheet.get_worksheet(0)  # Primeira aba
+        sheet = client.open_by_key(sheet_id)
+        worksheet = sheet.worksheet(sheet_name)
         worksheet.append_rows(data_list, value_input_option='USER_ENTERED')
         return True
     except Exception as e:
@@ -25,7 +25,7 @@ def upload_data_to_sheet(client, data_list, sheet_url):
 
 def main():
     st.title("Upload de Arquivo Excel para Google Sheets")
-    client = None  # Definindo client aqui
+    client = None
 
     uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
     data = None
@@ -43,7 +43,9 @@ def main():
 
     if st.button("Enviar para Google Sheets") and data is not None and client is not None:
         data_list = data.values.tolist()
-        if upload_data_to_sheet(client, data_list, "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"):
+        sheet_id = '1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE'
+        sheet_name = 'Página1'
+        if upload_data_to_sheet(client, data_list, sheet_id, sheet_name):
             st.success("Dados enviados com sucesso para o Google Sheets.")
         else:
             st.error("Falha ao enviar dados para o Google Sheets.")
