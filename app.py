@@ -11,8 +11,8 @@ import os
 def main():
     st.title("Upload de Arquivo Excel para Google Sheets")
 
-    # Crie uma conexão com o Google Sheets
-    gsheets_connector = GSheetsConnection(secrets=st.secrets)
+    # Estabelecendo a conexão com o Google Sheets
+    conn = st.connection("gsheets", type=GSheetsConnection)
 
     # Widget para fazer upload de arquivo Excel
     uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
@@ -27,7 +27,7 @@ def main():
         if st.button("Enviar para Google Sheets"):
             try:
                 # Abre a planilha e a aba especificada
-                sheet = gsheets_connector.open_spreadsheet_by_key('1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE')
+                sheet = conn.open_spreadsheet_by_key('1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE')
                 worksheet = sheet.worksheet_by_title('Página1')
                 
                 # Converte os dados para lista de listas
