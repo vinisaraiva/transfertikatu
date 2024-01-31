@@ -30,6 +30,7 @@ def main():
     st.title("Upload de Arquivo Excel para Google Sheets")
 
     uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
+    sheet = None
 
     if uploaded_file is not None:
         # Lê e exibe os dados da planilha Excel
@@ -48,15 +49,17 @@ def main():
             except Exception as e:
                 st.error(f"Falha ao conectar: {e}")
 
-        # Botão para enviar dados para o Google Sheets
-        if st.button("Enviar para Google Sheets"):
+    # Botão para enviar dados para o Google Sheets
+    if st.button("Enviar para Google Sheets"):
+        if sheet and not data.empty:
             try:
                 data_list = data.values.tolist()
                 sheet.update(SAMPLE_RANGE_NAME, data_list, value_input_option='USER_ENTERED')
                 st.success("Dados enviados com sucesso para o Google Sheets.")
             except Exception as e:
                 st.error(f"Falha ao enviar dados: {e}")
+        else:
+            st.warning("Primeiro conecte-se ao Google Sheets e/ou faça upload de um arquivo.")
 
 if __name__ == '__main__':
     main()
-
