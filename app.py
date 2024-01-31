@@ -46,6 +46,8 @@ def main():
     if uploaded_file is not None:
         # Lê e exibe os dados da planilha Excel
         data = pd.read_excel(uploaded_file, header=1)
+        # Converter nomes das colunas para strings
+        data.columns = data.columns.map(str)
         st.write("Dados lidos do arquivo Excel:")
         st.dataframe(data)
 
