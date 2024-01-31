@@ -4,7 +4,7 @@ import gspread
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
-from google.oauth2.service_account import ServiceAccountCredentials
+from oauth2client.service_account import ServiceAccountCredentials
 import os
 
 def authenticate_google_sheets():
