@@ -15,7 +15,7 @@ def authenticate_google_sheets():
 
 def upload_data_to_sheet(client, data_list, sheet_url):
     try:
-        sheet = client.open_by_url(sheet_url)
+        sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0')
         worksheet = sheet.get_worksheet(0)  # Primeira aba
         worksheet.append_rows(data_list, value_input_option='USER_ENTERED')
         return True
