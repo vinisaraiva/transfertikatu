@@ -9,8 +9,7 @@ import os
 
 def authenticate_google_sheets():
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-    # Caminho para o arquivo de credenciais do Google Cloud Platform
-    creds = ServiceAccountCredentials.from_json_keyfile_name('creden.json', SCOPES)
+    creds = ServiceAccountCredentials.from_json_keyfile_name('path/to/your/service-account-credentials.json', SCOPES)
     client = gspread.authorize(creds)
     return client
 
@@ -26,31 +25,28 @@ def upload_data_to_sheet(client, data_list, sheet_url):
 
 def main():
     st.title("Upload de Arquivo Excel para Google Sheets")
+    client = None  # Definindo client aqui
 
     uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
-
+    data = None
     if uploaded_file is not None:
-        # Lê e exibe os dados da planilha Excel
         data = pd.read_excel(uploaded_file, header=0)
         st.write("Dados lidos do arquivo Excel:")
         st.dataframe(data)
 
-        # Botão para conectar ao Google Sheets
-        if st.button("Conectar ao Google Sheets"):
-            try:
-                client = authenticate_google_sheets()
-                st.success("Conectado com sucesso ao Google Sheets!")
-            except Exception as e:
-                st.error(f"Falha ao conectar: {e}")
+    if st.button("Conectar ao Google Sheets"):
+        client = authenticate_google_sheets()
+        if client:
+            st.success("Conectado com sucesso ao Google Sheets!")
+        else:
+            st.error("Falha ao conectar ao Google Sheets.")
 
-        # Botão para enviar dados para o Google Sheets
-        if st.button("Enviar para Google Sheets"):
-            if not data.empty:
-                data_list = data.values.tolist()
-                if upload_data_to_sheet(client, data_list, "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"):
-                    st.success("Dados enviados com sucesso para o Google Sheets.")
-            else:
-                st.warning("Nenhum dado para enviar. Por favor, faça upload de um arquivo Excel primeiro.")
+    if st.button("Enviar para Google Sheets") and data is not None and client is not None:
+        data_list = data.values.tolist()
+        if upload_data_to_sheet(client, data_list, "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"):
+            st.success("Dados enviados com sucesso para o Google Sheets.")
+        else:
+            st.error("Falha ao enviar dados para o Google Sheets.")
 
 if __name__ == '__main__':
     main()
