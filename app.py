@@ -9,14 +9,14 @@ import os
 
 def authenticate_google_sheets():
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('cacesso.json', SCOPES)
+    creds = ServiceAccountCredentials.from_json_keyfile_name('creden.json', SCOPES)
     client = gspread.authorize(creds)
     return client
 
 def upload_data_to_sheet(client, data_list, sheet_id, sheet_name):
     try:
-        sheet = client.open_by_key('1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE')
-        worksheet = sheet.worksheet('Página1')
+        sheet = client.open_by_key(sheet_id)
+        worksheet = sheet.worksheet(sheet_name)
         worksheet.append_rows(data_list, value_input_option='USER_ENTERED')
         return True
     except Exception as e:
@@ -49,6 +49,10 @@ def main():
             st.success("Dados enviados com sucesso para o Google Sheets.")
         else:
             st.error("Falha ao enviar dados para o Google Sheets.")
+
+if __name__ == '__main__':
+    main()
+
 
 if __name__ == '__main__':
     main()
