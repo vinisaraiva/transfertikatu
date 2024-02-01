@@ -15,8 +15,8 @@ def authenticate_google_sheets():
 
 def upload_data_to_sheet(client, data_list, sheet_id, sheet_name):
     try:
-        sheet = client.open_by_key(sheet_id)
-        worksheet = sheet.worksheet(sheet_name)
+        sheet = client.open_by_key('1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE')
+        worksheet = sheet.worksheet('Página1')
         worksheet.append_rows(data_list, value_input_option='USER_ENTERED')
         return True
     except Exception as e:
