@@ -22,6 +22,20 @@ def insert_data_to_sheet(client, df, sheet_url):
 
 def main():
     st.title("Upload e Inserção de Arquivo Excel no Google Sheets")
+
+     # CSS para personalizar os botões
+    button_style = """
+    <style>
+    .stButton>button {
+        color: white;
+        background-color: #084d6e;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    </style>
+    """
+    st.markdown(button_style, unsafe_allow_html=True)
+    
     client = authenticate_google_sheets()
     uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
 
