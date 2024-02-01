@@ -22,22 +22,8 @@ def insert_data_to_sheet(client, df, sheet_url):
 
 def main():
     st.title("Upload e Inserção de Arquivo Excel no Google Sheets")
-    
-        # CSS para personalizar os botões
-    button_style = """
-    <style>
-    .stButton>button {
-        color: white;
-        background-color: #084d6e;
-        font-size: 16px;
-        font-weight: bold;
-    }
-    </style>
-    """
-    st.markdown(button_style, unsafe_allow_html=True)
-    
-    client = None
-    uploaded_file = st.file_uploader("Selecione um arquivo Excel", type=['xlsx', 'xls'])
+    client = authenticate_google_sheets()
+    uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
 
     if uploaded_file is not None:
         data = pd.read_excel(uploaded_file, header=0)
@@ -46,16 +32,12 @@ def main():
 
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
 
-    if st.button("Conectar ao Banco de Dados"):
-        client = authenticate_google_sheets()
-        if client:
-            st.success("Conectado com sucesso !")
-        else:
-            st.error("Falha ao conectar ao Banco de Dados.")
+    if st.button("Conectar ao Google Sheets"):
+        st.success("Conectado com sucesso ao Google Sheets.")
 
-    if st.button("Enviar para o Banco de Dados") and uploaded_file is not None:
+    if st.button("Enviar para Google Sheets") and uploaded_file is not None:
         insert_data_to_sheet(client, data, sheet_url)
-        st.success("Dados inseridos com sucesso.")
+        st.success("Dados inseridos com sucesso no Google Sheets.")
 
 if __name__ == '__main__':
     main()
