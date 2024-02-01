@@ -17,11 +17,9 @@ def authenticate_google_sheets():
 def insert_data_to_sheet(client, df, sheet_url):
     sheet = client.open_by_url(sheet_url)
     worksheet = sheet.get_worksheet(0)  # Primeira aba
-    # Converte cada célula do DataFrame para string
+    # Converte cada célula do DataFrame para string e insere na primeira linha vazia
     data_list = df.astype(str).values.tolist()
-    # Insere na primeira linha vazia
-    for data_row in data_list:
-        worksheet.append_row(data_row)
+    worksheet.append_rows(data_list, value_input_option='USER_ENTERED')
 
 def main():
     st.title("Upload de Arquivo Excel para Google Sheets")
@@ -34,6 +32,8 @@ def main():
         st.write("Dados lidos do arquivo Excel:")
         st.dataframe(data)
 
+    sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
+
     if st.button("Conectar ao Google Sheets"):
         client = authenticate_google_sheets()
         if client:
@@ -42,10 +42,8 @@ def main():
             st.error("Falha ao conectar ao Google Sheets.")
 
     if st.button("Enviar para Google Sheets") and data is not None and client is not None:
-        sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
-        insert_data_to_sheet(data, sheet_url)
+        insert_data_to_sheet(client, data, sheet_url)
         st.success("Dados enviados com sucesso para o Google Sheets.")
 
 if __name__ == '__main__':
     main()
-
