@@ -47,7 +47,14 @@ def main():
         header {visibility: hidden;}
         #stDecoration {display:none;}
     </style>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+    hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+    st.markdown(hide_st_style, unsafe_allow_html=True)
     
     client = authenticate_google_sheets()
     uploaded_file = st.file_uploader("Selecionar arquivo Excel", type=['xlsx', 'xls'])
