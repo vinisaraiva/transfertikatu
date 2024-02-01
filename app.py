@@ -11,7 +11,8 @@ import os
 def authenticate_google_sheets():
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
     creds = ServiceAccountCredentials.from_json_keyfile_name('cacesso.json', SCOPES)
-    return gspread.authorize(creds)
+    client = gspread.authorize(creds)
+    return client
 
 def insert_data_to_sheet(client, df, sheet_url):
     sheet = client.open_by_url(sheet_url)
@@ -22,7 +23,7 @@ def insert_data_to_sheet(client, df, sheet_url):
 
 def main():
     st.title("Upload e Inserção de Arquivo Excel no Google Sheets")
-
+    
     # CSS para personalizar os botões
     button_style = """
     <style>
@@ -36,6 +37,7 @@ def main():
     """
     st.markdown(button_style, unsafe_allow_html=True)
 
+    client = None  # Inicializa a variável client aqui
     uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
 
     if uploaded_file is not None:
@@ -47,9 +49,12 @@ def main():
 
     if st.button("Conectar ao Google Sheets"):
         client = authenticate_google_sheets()
-        st.success("Conectado com sucesso ao Google Sheets.")
+        if client:
+            st.success("Conectado com sucesso ao Google Sheets.")
+        else:
+            st.error("Falha ao conectar ao Google Sheets.")
 
-    if st.button("Enviar para Google Sheets") and uploaded_file is not None:
+    if st.button("Enviar para Google Sheets") and uploaded_file is not None and client:
         insert_data_to_sheet(client, data, sheet_url)
         st.success("Dados inseridos com sucesso no Google Sheets.")
 
