@@ -11,8 +11,7 @@ import os
 def authenticate_google_sheets():
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
     creds = ServiceAccountCredentials.from_json_keyfile_name('cacesso.json', SCOPES)
-    client = gspread.authorize(creds)
-    return client
+    return gspread.authorize(creds)
 
 def insert_data_to_sheet(client, df, sheet_url):
     sheet = client.open_by_url(sheet_url)
@@ -24,7 +23,7 @@ def insert_data_to_sheet(client, df, sheet_url):
 def main():
     st.title("Upload e Inserção de Arquivo Excel no Google Sheets")
     
-    # CSS para personalizar os botões
+        # CSS para personalizar os botões
     button_style = """
     <style>
     .stButton>button {
@@ -36,9 +35,9 @@ def main():
     </style>
     """
     st.markdown(button_style, unsafe_allow_html=True)
-
-    client = None  # Inicializa a variável client aqui
-    uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
+    
+    client = None
+    uploaded_file = st.file_uploader("Selecione um arquivo Excel", type=['xlsx', 'xls'])
 
     if uploaded_file is not None:
         data = pd.read_excel(uploaded_file, header=0)
@@ -47,17 +46,16 @@ def main():
 
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
 
-    if st.button("Conectar ao Google Sheets"):
+    if st.button("Conectar ao Banco de Dados"):
         client = authenticate_google_sheets()
         if client:
-            st.success("Conectado com sucesso ao Google Sheets.")
+            st.success("Conectado com sucesso !")
         else:
-            st.error("Falha ao conectar ao Google Sheets.")
+            st.error("Falha ao conectar ao Banco de Dados.")
 
-    if st.button("Enviar para Google Sheets") and uploaded_file is not None and client:
+    if st.button("Enviar para o Banco de Dados") and uploaded_file is not None:
         insert_data_to_sheet(client, data, sheet_url)
-        st.success("Dados inseridos com sucesso no Google Sheets.")
+        st.success("Dados inseridos com sucesso.")
 
 if __name__ == '__main__':
     main()
-
