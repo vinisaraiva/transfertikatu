@@ -35,9 +35,17 @@ def main():
     </style>
     """
     st.markdown(button_style, unsafe_allow_html=True)
+
+    hide_streamlit_style = """
+    <style>
+    .css-hi6a2p {padding-top: 0rem;}
+    </style>
+
+    """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
     
     client = authenticate_google_sheets()
-    uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
+    uploaded_file = st.file_uploader("Selecionar arquivo Excel", type=['xlsx', 'xls'])
 
     if uploaded_file is not None:
         data = pd.read_excel(uploaded_file, header=0)
@@ -47,11 +55,11 @@ def main():
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
 
     if st.button("Conectar ao Banco de Dados"):
-        st.success("Conectado com sucesso ao Google Sheets.")
+        st.success("Conectado com sucesso ao Banco de Dados.")
 
     if st.button("Transferir Dados") and uploaded_file is not None:
         insert_data_to_sheet(client, data, sheet_url)
-        st.success("Dados inseridos com sucesso no Google Sheets.")
+        st.success("Dados inseridos com sucesso!")
 
 if __name__ == '__main__':
     main()
