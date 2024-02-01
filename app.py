@@ -75,13 +75,13 @@ def main():
         """, unsafe_allow_html=True)
     
     client = authenticate_google_sheets()
-    st.subheader('Selecione aqui o arquivo excel', divider='rainbow')
+    st.subheader('Selecione aqui o arquivo excel')
     uploaded_file = st.file_uploader("", type=['xlsx', 'xls'])
     if uploaded_file is not None:
         data = pd.read_excel(uploaded_file, header=0)
         st.write("Dados lidos do arquivo Excel:")
         st.dataframe(data)
-
+    st.subheader('', divider='rainbow')
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
 
     if st.button("Conectar ao Banco de Dados"):
