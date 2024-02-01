@@ -75,6 +75,7 @@ def main():
         """, unsafe_allow_html=True)
     
     client = authenticate_google_sheets()
+    st.subheader('SELECIONE AQUI O ARQUIVO EXCEL', divider='rainbow')
     uploaded_file = st.file_uploader("", type=['xlsx', 'xls'])
 
     if uploaded_file is not None:
