@@ -36,16 +36,18 @@ def main():
     """
     st.markdown(button_style, unsafe_allow_html=True)
 
-    hide_streamlit_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    GithubIcon {visibility: hidden;}
-    .css-hi6a2p {padding-top: 0rem;}
-    footer {visibility: hidden;}
-    </style>
-
+    st.markdown(
     """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+    <style>
+    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+    .viewerBadge_text__1JaDK {
+        display: none;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+    ) 
     
     client = authenticate_google_sheets()
     uploaded_file = st.file_uploader("Selecionar arquivo Excel", type=['xlsx', 'xls'])
