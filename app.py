@@ -26,6 +26,9 @@ def insert_data_to_sheet(client, df, sheet_url):
     worksheet.insert_rows(data_list, next_row)
 
 def main():
+    imagem = Image.open('banner.png')
+    st.image (imagem, caption='')
+
     st.title("Upload e Inserção de Arquivo Excel no Google Sheets")
 
      # CSS para personalizar os botões
