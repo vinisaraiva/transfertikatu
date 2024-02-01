@@ -26,6 +26,17 @@ def main():
         else:
             st.error("Falha ao conectar ao Google Sheets.")
 
-    if st.button("Enviar para Google Sheets") and uploaded_file is not None:
-        insert_data_to_sheet(client, data, sheet_url)
+           if st.button("Enviar para Google Sheets") and uploaded_file is not None:
+            try:
+                if data is not None:
+                    insert_data_to_sheet(client, data, sheet_url)
+                    st.success("Dados inseridos com sucesso no Google Sheets.")
+                else:
+                    st.error("Nenhum dado para enviar. Faça o upload de um arquivo Excel primeiro.")
+            except Exception as e:
+                st.error(f"Falha ao inserir dados: {e}")
+
+if __name__ == '__main__':
+    main()
+
 
