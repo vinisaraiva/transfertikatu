@@ -41,9 +41,10 @@ def main():
         else:
             st.error("Falha ao conectar ao Google Sheets.")
 
-    if st.button("Enviar para Google Sheets") and data is not None and client is not None:
+    if st.button("Enviar para Google Sheets"):
         insert_data_to_sheet(client, data, sheet_url)
         st.success("Dados enviados com sucesso para o Google Sheets.")
+
 
 if __name__ == '__main__':
     main()
