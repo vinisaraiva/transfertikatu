@@ -63,10 +63,10 @@ def main():
     st.markdown("""
         <style>
                .block-container {
-                    padding-top: 0rem;
+                    padding-top: 0.3rem;
                     padding-bottom: 0rem;
-                    padding-left: 0.5rem;
-                    padding-right: 0rem;
+                    padding-left: 0.3rem;
+                    padding-right: 0.3rem;
     
                 }
                 
