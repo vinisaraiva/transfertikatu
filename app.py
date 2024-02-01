@@ -16,9 +16,10 @@ def authenticate_google_sheets():
 
 def insert_data_to_sheet(client, df, sheet_url):
     sheet = client.open_by_url(sheet_url)
-    worksheet = sheet.get_worksheet(0)  # Primeira aba
-    # Converte cada célula do DataFrame para string e insere na primeira linha vazia
+    worksheet = sheet.get_worksheet(0)  # Acessa a primeira aba
+    # Converte o DataFrame para uma lista de listas
     data_list = df.astype(str).values.tolist()
+    # Encontra a primeira linha vazia e insere os dados
     worksheet.append_rows(data_list, value_input_option='USER_ENTERED')
 
 def main():
