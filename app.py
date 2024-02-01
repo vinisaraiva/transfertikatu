@@ -38,16 +38,16 @@ def main():
 
     st.markdown("""
     <style>
-    #MainMenu, header, footer {visibility: hidden;}
-
-    /* This code gets the first element on the sidebar,
-    and overrides its default styling */
-    section[data-testid="stSidebar"] div:first-child {
-        top: 0;
-        height: 100vh;
-    }
+        .reportview-container {
+            margin-top: -2em;
+        }
+        #MainMenu {visibility: hidden;}
+        .stDeployButton {display:none;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+        #stDecoration {display:none;}
     </style>
-    """,unsafe_allow_html=True)
+""", unsafe_allow_html=True)
     
     client = authenticate_google_sheets()
     uploaded_file = st.file_uploader("Selecionar arquivo Excel", type=['xlsx', 'xls'])
