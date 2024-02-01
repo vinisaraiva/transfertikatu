@@ -9,7 +9,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import os
 
 st.set_page_config(
-    page_title="Rio Chamagunga",
+    page_title="App TIKATU",
     page_icon="📑",
 )
 
