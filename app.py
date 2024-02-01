@@ -75,7 +75,7 @@ def main():
         """, unsafe_allow_html=True)
     
     client = authenticate_google_sheets()
-    uploaded_file = st.file_uploader("Selecionar arquivo Excel", type=['xlsx', 'xls'])
+    uploaded_file = st.file_uploader("SELECIONE AQUI O ARQUIVO EXCEL", type=['xlsx', 'xls'])
 
     if uploaded_file is not None:
         data = pd.read_excel(uploaded_file, header=0)
