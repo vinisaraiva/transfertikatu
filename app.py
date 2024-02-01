@@ -38,10 +38,12 @@ def main():
 
     hide_streamlit_style = """
     <style>
-    .css-hi6a2p {padding-top: 0rem;}
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
     </style>
+
     """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
     
     client = authenticate_google_sheets()
     uploaded_file = st.file_uploader("Selecionar arquivo Excel", type=['xlsx', 'xls'])
