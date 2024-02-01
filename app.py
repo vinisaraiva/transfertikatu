@@ -36,7 +36,7 @@ def main():
     """
     st.markdown(button_style, unsafe_allow_html=True)
 
-     st.markdown("""
+    st.markdown("""
     <style>
     #MainMenu, header, footer {visibility: hidden;}
 
