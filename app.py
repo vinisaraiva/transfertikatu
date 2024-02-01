@@ -60,6 +60,21 @@ def main():
             </style>
             """
     st.markdown(hide_st_style, unsafe_allow_html=True)
+
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    st.markdown("""
+        <style>
+               .block-container {
+                    padding-top: 0rem;
+                    padding-bottom: 0rem;
+                    padding-left: 0.5rem;
+                    padding-right: 0rem;
+    
+                }
+                
+                
+        </style>
+        """, unsafe_allow_html=True)
     
     client = authenticate_google_sheets()
     uploaded_file = st.file_uploader("Selecionar arquivo Excel", type=['xlsx', 'xls'])
