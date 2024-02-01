@@ -42,7 +42,7 @@ def main():
             st.error("Falha ao conectar ao Google Sheets.")
 
     if st.button("Enviar para Google Sheets"):
-        insert_data_to_sheet(client, data, sheet_url)
+        insert_data_to_sheet()
         st.success("Dados enviados com sucesso para o Google Sheets.")
 
 
