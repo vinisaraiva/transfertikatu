@@ -52,14 +52,7 @@ def main():
         header {visibility: hidden;}
         #stDecoration {display:none;}
     </style>
-    """, unsafe_allow_html=True)
-    hide_st_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            </style>
-            """
-    st.markdown(hide_st_style, unsafe_allow_html=True)
+ 
 
     st.set_option('deprecation.showPyplotGlobalUse', False)
     st.markdown("""
