@@ -9,46 +9,33 @@ import os
 
 def authenticate_google_sheets():
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('cacesso.json', SCOPES)
+    creds = ServiceAccountCredentials.from_json_keyfile_name('creden.json', SCOPES)
     client = gspread.authorize(creds)
     return client
 
-def upload_data_to_sheet(client, data_list, sheet_id, sheet_name):
-    try:
-        sheet = client.open_by_key(sheet_id)
-        worksheet = sheet.worksheet(sheet_name)
-        worksheet.append_rows(data_list, value_input_option='USER_ENTERED')
-        return True
-    except Exception as e:
-        st.error(f"Falha ao enviar dados: {e}")
-        return False
+def get_last_rows(sheet_url, nrows=3):
+    client = authenticate_google_sheets()
+    sheet = client.open_by_url(sheet_url)
+    worksheet = sheet.sheet1
+    # Obtém todas as linhas da planilha
+    rows = worksheet.get_all_values()
+    # Converte para DataFrame
+    df = pd.DataFrame.from_records(rows)
+    # Exibe as últimas n linhas
+    return df.tail(nrows)
 
 def main():
-    st.title("Upload de Arquivo Excel para Google Sheets")
-    client = None
+    st.title("Conexão com Google Sheets e Visualização de Dados")
 
-    uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
-    data = None
-    if uploaded_file is not None:
-        data = pd.read_excel(uploaded_file, header=0)
-        st.write("Dados lidos do arquivo Excel:")
-        st.dataframe(data)
+    sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
 
-    if st.button("Conectar ao Google Sheets"):
-        client = authenticate_google_sheets()
-        if client:
-            st.success("Conectado com sucesso ao Google Sheets!")
-        else:
-            st.error("Falha ao conectar ao Google Sheets.")
-
-    if st.button("Enviar para Google Sheets") and data is not None and client is not None:
-        data_list = data.values.tolist()
-        sheet_id = '1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE'
-        sheet_name = 'Página1'
-        if upload_data_to_sheet(client, data_list, sheet_id, sheet_name):
-            st.success("Dados enviados com sucesso para o Google Sheets.")
-        else:
-            st.error("Falha ao enviar dados para o Google Sheets.")
+    if st.button("Conectar e Exibir Últimas Linhas do Google Sheets"):
+        try:
+            df_last_rows = get_last_rows(sheet_url)
+            st.write("Últimas linhas da planilha Google Sheets:")
+            st.dataframe(df_last_rows)
+        except Exception as e:
+            st.error(f"Falha ao conectar ou ler dados: {e}")
 
 if __name__ == '__main__':
     main()
