@@ -36,18 +36,18 @@ def main():
     """
     st.markdown(button_style, unsafe_allow_html=True)
 
-    st.markdown(
-    """
+     st.markdown("""
     <style>
-    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
-    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
-    .viewerBadge_text__1JaDK {
-        display: none;
+    #MainMenu, header, footer {visibility: hidden;}
+
+    /* This code gets the first element on the sidebar,
+    and overrides its default styling */
+    section[data-testid="stSidebar"] div:first-child {
+        top: 0;
+        height: 100vh;
     }
     </style>
-    """,
-    unsafe_allow_html=True
-    ) 
+    """,unsafe_allow_html=True)
     
     client = authenticate_google_sheets()
     uploaded_file = st.file_uploader("Selecionar arquivo Excel", type=['xlsx', 'xls'])
