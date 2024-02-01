@@ -30,7 +30,7 @@ def main():
     imagem = Image.open('bannerapp1.png')
     st.image (imagem, caption='')
 
-    st.title("App para envio de dados do monitoramento da água")
+    st.title(":blue[App para envio de dados do monitoramento da água]")
 
      # CSS para personalizar os botões
     button_style = """
