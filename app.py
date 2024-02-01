@@ -11,21 +11,18 @@ import os
 def authenticate_google_sheets():
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
     creds = ServiceAccountCredentials.from_json_keyfile_name('cacesso.json', SCOPES)
-    client = gspread.authorize(creds)
-    return client
+    return gspread.authorize(creds)
 
 def insert_data_to_sheet(client, df, sheet_url):
     sheet = client.open_by_url(sheet_url)
     worksheet = sheet.get_worksheet(0)
-    # Encontra a primeira linha vazia
-    empty_row = len(worksheet.get_all_values()) + 1
-    # Converte o DataFrame para uma lista de listas e insere na planilha
     for index, row in df.iterrows():
-        worksheet.append_row(row.values.tolist(), table_range=f"A{empty_row + index}")
+        worksheet.append_row(row.values.tolist())
 
 def main():
     st.title("Upload de Arquivo Excel para Google Sheets")
-    
+    client = None  # Inicializa a variável client
+
     uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
     if uploaded_file is not None:
         data = pd.read_excel(uploaded_file, header=0)
@@ -35,13 +32,13 @@ def main():
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
 
     if st.button("Conectar ao Google Sheets"):
-        client = authenticate_google_sheets()
-        st.success("Conectado com sucesso ao Google Sheets.")
+        client = authenticate_google_sheets()  # Atualiza a variável client após a autenticação
+        if client:
+            st.success("Conectado com sucesso ao Google Sheets!")
 
-    if st.button("Enviar para Google Sheets") and uploaded_file is not None:
+    if st.button("Enviar para Google Sheets") and uploaded_file is not None and client is not None:
         insert_data_to_sheet(client, data, sheet_url)
         st.success("Dados inseridos com sucesso no Google Sheets.")
 
 if __name__ == '__main__':
     main()
-
