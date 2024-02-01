@@ -17,9 +17,11 @@ def authenticate_google_sheets():
 def insert_data_to_sheet(client, df, sheet_url):
     sheet = client.open_by_url(sheet_url)
     worksheet = sheet.get_worksheet(0)  # Primeira aba
-    # Converte o DataFrame para uma lista de listas e insere na primeira linha vazia
-    for index, row in df.iterrows():
-        worksheet.append_row(row.values.tolist())
+    # Converte cada célula do DataFrame para string
+    data_list = df.astype(str).values.tolist()
+    # Insere na primeira linha vazia
+    for data_row in data_list:
+        worksheet.append_row(data_row)
 
 def main():
     st.title("Upload de Arquivo Excel para Google Sheets")
