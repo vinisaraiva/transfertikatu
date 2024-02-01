@@ -40,7 +40,6 @@ def main():
     <style>
     .css-hi6a2p {padding-top: 0rem;}
     </style>
-
     """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
     
