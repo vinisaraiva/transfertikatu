@@ -42,5 +42,8 @@ def main():
 
     if st.button("Enviar para Google Sheets") and data is not None and client is not None:
         insert_data_to_sheet(client, data, sheet_url)
-        st
+        st.success("Dados inseridos com sucesso no Google Sheets.")
+
+if __name__ == '__main__':
+    main()
 
