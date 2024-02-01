@@ -41,7 +41,7 @@ def main():
     """
     st.markdown(button_style, unsafe_allow_html=True)
 
-    st.markdown("""
+   st.markdown("""
     <style>
         .reportview-container {
             margin-top: -2em;
@@ -52,7 +52,7 @@ def main():
         header {visibility: hidden;}
         #stDecoration {display:none;}
     </style>
- 
+    """, unsafe_allow_html=True)
 
     st.set_option('deprecation.showPyplotGlobalUse', False)
     st.markdown("""
