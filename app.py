@@ -14,16 +14,13 @@ def authenticate_google_sheets():
     client = gspread.authorize(creds)
     return client
 
-def upload_data_to_sheet(client, data_list, sheet_url):
-    try:
-        sheet = client.open_by_url(sheet_url)
-        worksheet = sheet.sheet1  # Acessando a primeira aba diretamente
-        for data_row in data_list:
-            worksheet.append_row(data_row, value_input_option='USER_ENTERED')
-        return True
-    except Exception as e:
-        st.error(f"Falha ao enviar dados: {e}")
-        return False
+def insert_data_to_sheet(df, sheet_url):
+    client = authenticate_google_sheets()
+    sheet = client.open_by_url(sheet_url)
+    worksheet = sheet.get_worksheet(0)  # Primeira aba
+    # Converte o DataFrame para uma lista de listas e insere na primeira linha vazia
+    for index, row in df.iterrows():
+        worksheet.append_row(row.values.tolist())
 
 def main():
     st.title("Upload de Arquivo Excel para Google Sheets")
@@ -46,11 +43,8 @@ def main():
             st.error("Falha ao conectar ao Google Sheets.")
 
     if st.button("Enviar para Google Sheets") and data is not None and client is not None:
-        data_list = data.values.tolist()
-        if upload_data_to_sheet(client, data_list, sheet_url):
-            st.success("Dados enviados com sucesso para o Google Sheets.")
-        else:
-            st.error("Falha ao enviar dados para o Google Sheets.")
+        insert_data_to_sheet(data, sheet_url)
+        st.success("Dados enviados com sucesso para o Google Sheets.")
 
 if __name__ == '__main__':
     main()
