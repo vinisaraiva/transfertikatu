@@ -75,9 +75,8 @@ def main():
         """, unsafe_allow_html=True)
     
     client = authenticate_google_sheets()
-    
-    uploaded_file = st.file_uploader("", type=['xlsx', 'xls'])
     st.subheader('Selecione aqui o arquivo excel', divider='rainbow')
+    uploaded_file = st.file_uploader("", type=['xlsx', 'xls'])
     if uploaded_file is not None:
         data = pd.read_excel(uploaded_file, header=0)
         st.write("Dados lidos do arquivo Excel:")
