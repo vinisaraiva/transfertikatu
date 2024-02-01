@@ -29,7 +29,7 @@ def main():
     .stButton>button {
         color: white;
         background-color: #084d6e;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: bold;
     }
     </style>
@@ -46,10 +46,10 @@ def main():
 
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
 
-    if st.button("Conectar ao Google Sheets"):
+    if st.button("Conectar ao Banco de Dados"):
         st.success("Conectado com sucesso ao Google Sheets.")
 
-    if st.button("Enviar para Google Sheets") and uploaded_file is not None:
+    if st.button("Transferir Dados") and uploaded_file is not None:
         insert_data_to_sheet(client, data, sheet_url)
         st.success("Dados inseridos com sucesso no Google Sheets.")
 
