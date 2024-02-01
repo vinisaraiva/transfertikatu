@@ -14,13 +14,10 @@ def authenticate_google_sheets():
     client = gspread.authorize(creds)
     return client
 
-def insert_data_to_sheet(client, df, sheet_url):
+def insert_data_to_sheet(df, sheet_url):
     client = authenticate_google_sheets()
     sheet = client.open_by_url(sheet_url)
-    worksheet = sheet.get_worksheet(0)  # Acessa a primeira aba
-    # Converte o DataFrame para uma lista de listas
-    data_list = df.astype(str).values.tolist()
-    # Encontra a primeira linha vazia e insere os dados
+    worksheet = sheet.get_worksheet(0)
     for index, row in df.iterrows():
         worksheet.append_row(row.values.tolist())
 
