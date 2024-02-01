@@ -78,7 +78,7 @@ def main():
     uploaded_file = st.file_uploader("Selecionar arquivo Excel", type=['xlsx', 'xls'])
 
     if uploaded_file is not None:
-        data = pd.read_excel(uploaded_file, header=3)
+        data = pd.read_excel(uploaded_file, header=0)
         st.write("Dados lidos do arquivo Excel:")
         st.dataframe(data)
 
