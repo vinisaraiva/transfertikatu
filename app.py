@@ -43,7 +43,7 @@ def main():
 
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
     if st.button("Inserir Dados no Google Sheets"):
-        insert_data_to_sheet(client, data, sheet_url)
+        insert_data_to_sheet(df, sheet_url)
         st.success("Dados inseridos com sucesso no Google Sheets.")
 
 
