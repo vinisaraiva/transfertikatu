@@ -8,12 +8,6 @@ from google.oauth2.credentials import Credentials
 from oauth2client.service_account import ServiceAccountCredentials
 import os
 
-import streamlit as st
-import pandas as pd
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-import os
-
 def authenticate_google_sheets():
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
     creds = ServiceAccountCredentials.from_json_keyfile_name('cacesso.json', SCOPES)
