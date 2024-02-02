@@ -87,7 +87,7 @@ def main():
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("Conectar ao Google Sheets", key='connect'):
+        if st.button("CONECTAR", key='connect'):
             client = authenticate_google_sheets()
             if client:
                 st.session_state['client'] = client
@@ -96,7 +96,7 @@ def main():
                 st.session_state['connection_status'] = 'error'
     
     with col2:
-        if st.button("Enviar para Google Sheets", key='send'):
+        if st.button("TRANSFERIR DADOS", key='send'):
             if 'connection_status' not in st.session_state or st.session_state['connection_status'] != 'success':
                 st.error("Por favor, conecte-se ao Google Sheets primeiro.")
             elif uploaded_file is None:
