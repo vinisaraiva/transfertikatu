@@ -84,29 +84,29 @@ def main():
     st.subheader('', divider='rainbow')
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
     
-col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
-with col1:
-    if st.button("Conectar ao Google Sheets"):
-        client = authenticate_google_sheets()
-        if client:
-            st.session_state['connection_status'] = 'success'
-        else:
-            st.session_state['connection_status'] = 'error'
+    with col1:
+        if st.button("Conectar ao Google Sheets"):
+            client = authenticate_google_sheets()
+            if client:
+                st.session_state['connection_status'] = 'success'
+            else:
+                st.session_state['connection_status'] = 'error'
 
-with col2:
-    if st.button("Enviar para Google Sheets") and uploaded_file is not None and 'client' in locals():
-        insert_data_to_sheet(client, data, sheet_url)
-        st.session_state['insert_status'] = 'success'
-
-if 'connection_status' in st.session_state:
-    if st.session_state['connection_status'] == 'success':
-        st.success("Conectado com sucesso ao Google Sheets.")
-    elif st.session_state['connection_status'] == 'error':
-        st.error("Falha ao conectar ao Google Sheets.")
-
-if 'insert_status' in st.session_state and st.session_state['insert_status'] == 'success':
-    st.success("Dados inseridos com sucesso no Google Sheets.")
+    with col2:
+        if st.button("Enviar para Google Sheets") and uploaded_file is not None and 'client' in locals():
+            insert_data_to_sheet(client, data, sheet_url)
+            st.session_state['insert_status'] = 'success'
+    
+    if 'connection_status' in st.session_state:
+        if st.session_state['connection_status'] == 'success':
+            st.success("Conectado com sucesso ao Google Sheets.")
+        elif st.session_state['connection_status'] == 'error':
+            st.error("Falha ao conectar ao Google Sheets.")
+    
+    if 'insert_status' in st.session_state and st.session_state['insert_status'] == 'success':
+        st.success("Dados inseridos com sucesso no Google Sheets.")
         
 if __name__ == '__main__':
     main()
