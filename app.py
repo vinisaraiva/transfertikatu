@@ -88,11 +88,11 @@ def main():
 
     with col1:
         if st.button("Conectar ao Banco de Dados", key="1"):
+            pass
     with col2:
         if st.button("Transferir Dados", key="2") and uploaded_file is not None:
-        insert_data_to_sheet(client, data, sheet_url)
-        
-    
+        insert_data_to_sheet(client, data, sheet_url)      
+            pass
     if 'status' in st.session_state:
     if st.session_state['status'] == 'success':
        st.success("Conectado com sucesso ao Banco de Dados.")
