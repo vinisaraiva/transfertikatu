@@ -87,7 +87,7 @@ def main():
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("Conectar ao Banco de Dados"):
+        if st.button("Efetuar Conexão"):
             client = authenticate_google_sheets()
             if client:
                 st.session_state['connection_status'] = 'success'
