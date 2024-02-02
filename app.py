@@ -87,7 +87,7 @@ def main():
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("Conectar ao Google Sheets"):
+        if st.button("Conectar ao Banco de Dados"):
             client = authenticate_google_sheets()
             if client:
                 st.session_state['connection_status'] = 'success'
@@ -95,7 +95,7 @@ def main():
                 st.session_state['connection_status'] = 'error'
 
     with col2:
-        if st.button("Enviar para Google Sheets") and uploaded_file is not None and 'client' in locals():
+        if st.button("Transferir dados") and uploaded_file is not None and 'client' in locals():
             insert_data_to_sheet(client, data, sheet_url)
             st.session_state['insert_status'] = 'success'
     
