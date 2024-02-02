@@ -87,7 +87,7 @@ def main():
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONECTAR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", key='connect'):
+        if st.button("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONECTAR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", key='connect'):
             client = authenticate_google_sheets()
             if client:
                 st.session_state['client'] = client
