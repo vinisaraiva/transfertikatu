@@ -83,13 +83,22 @@ def main():
         st.dataframe(data)
     st.subheader('', divider='rainbow')
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
+    
+    col1, col2 = st.columns(2)
 
-    if st.button("Conectar ao Banco de Dados"):
+    with col1:
+        if st.button("Conectar ao Banco de Dados", key="1"):
         st.success("Conectado com sucesso ao Banco de Dados.")
-
-    if st.button("Transferir Dados") and uploaded_file is not None:
+    with col2:
+    if st.button("Transferir Dados", key="2") and uploaded_file is not None:
         insert_data_to_sheet(client, data, sheet_url)
         st.success("Dados inseridos com sucesso!")
-
+    
+    if 'status' in st.session_state:
+    if st.session_state['status'] == 'success':
+        st.success("Conectado com sucesso ao Google Sheets.")
+    elif st.session_state['status'] == 'error':
+        st.error("Falha ao conectar ao Google Sheets.")
+        
 if __name__ == '__main__':
     main()
