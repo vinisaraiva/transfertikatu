@@ -76,7 +76,7 @@ def main():
     
     client = authenticate_google_sheets()
     st.subheader('Selecione abaixo o arquivo excel')
-    uploaded_file = st.file_uploader("", type=['xlsx', 'xls'])
+    uploaded_file = st.file_uploader("", type=['xlsx', 'xls'], key='file_uploader')
     if uploaded_file is not None:
         data = pd.read_excel(uploaded_file, header=0)
         st.write("Dados lidos do arquivo Excel:")
@@ -87,18 +87,26 @@ def main():
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("Efetuar Conexão"):
+        if st.button("Conectar ao Google Sheets", key='connect'):
             client = authenticate_google_sheets()
             if client:
+                st.session_state['client'] = client
                 st.session_state['connection_status'] = 'success'
             else:
                 st.session_state['connection_status'] = 'error'
-
-    with col2:
-        if st.button("Transferir dados") and uploaded_file is not None and 'client' in locals():
-            insert_data_to_sheet(client, data, sheet_url)
-            st.session_state['insert_status'] = 'success'
     
+    with col2:
+        if st.button("Enviar para Google Sheets", key='send'):
+            if 'connection_status' not in st.session_state or st.session_state['connection_status'] != 'success':
+                st.error("Por favor, conecte-se ao Google Sheets primeiro.")
+            elif uploaded_file is None:
+                st.error("Por favor, selecione um arquivo para poder efetuar o envio.")
+            elif 'client' in st.session_state:
+                data = pd.read_excel(uploaded_file, header=0)
+                insert_data_to_sheet(st.session_state['client'], data, sheet_url)
+                st.session_state['insert_status'] = 'success'
+    
+    # Mensagens de status
     if 'connection_status' in st.session_state:
         if st.session_state['connection_status'] == 'success':
             st.success("Conectado com sucesso ao Google Sheets.")
