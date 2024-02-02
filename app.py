@@ -89,7 +89,7 @@ def main():
     with col1:
         if st.button("Conectar ao Banco de Dados", key="1"):
     with col2:
-    if st.button("Transferir Dados", key="2") and uploaded_file is not None:
+        if st.button("Transferir Dados", key="2") and uploaded_file is not None:
         insert_data_to_sheet(client, data, sheet_url)
         
     
