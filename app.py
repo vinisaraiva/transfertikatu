@@ -86,18 +86,27 @@ def main():
     
     col1, col2 = st.columns(2)
 
-    with col1:
-        if st.button("Conectar ao Banco de Dados", key="1"):
-            pass
-    with col2:
-        if st.button("Transferir Dados", key="2") and uploaded_file is not None:
-        insert_data_to_sheet(client, data, sheet_url)      
-            pass
-    if 'status' in st.session_state:
-    if st.session_state['status'] == 'success':
-       st.success("Conectado com sucesso ao Banco de Dados.")
-    elif st.session_state['status'] == 'error':
-        st.success("Dados inseridos com sucesso!")
+with col1:
+    if st.button("Conectar ao Google Sheets"):
+        client = authenticate_google_sheets()
+        if client:
+            st.session_state['connection_status'] = 'success'
+        else:
+            st.session_state['connection_status'] = 'error'
+
+with col2:
+    if st.button("Enviar para Google Sheets") and uploaded_file is not None and 'client' in locals():
+        insert_data_to_sheet(client, data, sheet_url)
+        st.session_state['insert_status'] = 'success'
+
+if 'connection_status' in st.session_state:
+    if st.session_state['connection_status'] == 'success':
+        st.success("Conectado com sucesso ao Google Sheets.")
+    elif st.session_state['connection_status'] == 'error':
+        st.error("Falha ao conectar ao Google Sheets.")
+
+if 'insert_status' in st.session_state and st.session_state['insert_status'] == 'success':
+    st.success("Dados inseridos com sucesso no Google Sheets.")
         
 if __name__ == '__main__':
     main()
