@@ -47,12 +47,12 @@ def main():
     uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
 
     if uploaded_file is not None:
-        # Lê o arquivo Excel
         data = pd.read_excel(uploaded_file, header=0)
-        # Filtra as linhas onde a data na coluna 'C' é igual à data atual
-        data['Date'] = pd.to_datetime(data['Date']).dt.date
-        today = pd.to_datetime('today').date()
-        filtered_data = data[data['Date'] == today]
+        # Converte a coluna 'Date' para o formato de string
+        data['Date'] = pd.to_datetime(data['Date']).dt.strftime('%Y-%m-%d')
+        today_str = datetime.now().strftime('%Y-%m-%d')
+        # Filtra os dados para incluir apenas as linhas com a data de hoje
+        filtered_data = data[data['Date'] == today_str]
         st.write("Dados filtrados do arquivo Excel para a data atual:")
         st.dataframe(filtered_data)
 
