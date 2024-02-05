@@ -41,7 +41,8 @@ def upload_file_to_drive(drive_service, filename, filepath, folder_id):
     return file.get('id')
 
 def main():
-       
+    imagem = Image.open('bannerapp1.png')
+    st.image (imagem, caption='')
      # CSS para personalizar os botões
     button_style = """
     <style>
@@ -59,7 +60,7 @@ def main():
     st.markdown("""
     <style>
         .reportview-container {
-            margin-top: -4em;
+            margin-top: -2em;
         }
         #MainMenu {visibility: hidden;}
         .stDeployButton {display:none;}
@@ -83,8 +84,6 @@ def main():
                 #root > div:nth-child(1) > div > div > div > div > section > div {padding-bottom: 0rem;}
         </style>
         """, unsafe_allow_html=True)
-    imagem = Image.open('bannerapp1.png')
-    st.image (imagem, caption='')
     st.title(":blue[App para envio de dados do monitoramento da água]")
 
     uploaded_file = st.file_uploader("SELECIONE ABAIXO O ARQUIVO", type=['xlsx', 'xls'])
