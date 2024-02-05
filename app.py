@@ -104,7 +104,7 @@ def main():
     st.subheader('', divider='rainbow')
     col1, col2 = st.columns(2)
     with col1:
-        connect_button = st.button("CONECTAR", key='connect_google_sheets')
+        connect_button = st.button("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONECTAR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", key='connect_google_sheets')
     with col2:
         send_button = st.button("TRANSFERIR DADOS", key='send_to_google_sheets_drive')
 
