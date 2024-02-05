@@ -42,29 +42,41 @@ def main():
     </style>
     """, unsafe_allow_html=True)
 
-    client = None
     uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
 
     if uploaded_file is not None:
         data = pd.read_excel(uploaded_file, header=0)
-        st.write("Dados lidos do arquivo Excel:")
-        st.dataframe(data)
+        # Converte a coluna 'Date' para datetime
+        data['Date'] = pd.to_datetime(data['Date'])
+        # Ordena o DataFrame pela coluna 'Date' em ordem decrescente
+        data.sort_values(by='Date', ascending=False, inplace=True)
+        # Identifica a data mais recente
+        most_recent_date = data['Date'].max()
+        # Filtra o DataFrame para incluir apenas linhas com a data mais recente
+        filtered_data = data[data['Date'] == most_recent_date]
+        st.write("Dados filtrados do arquivo Excel para a data mais recente:")
+        st.dataframe(filtered_data)
 
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
 
+    client = authenticate_google_sheets()
+
     if st.button("Conectar ao Google Sheets", key='connect_google_sheets'):
-        client = authenticate_google_sheets()
         if client:
             st.success("Conectado com sucesso ao Google Sheets.")
         else:
             st.error("Falha ao conectar ao Google Sheets.")
 
     if st.button("Enviar para Google Sheets", key='send_to_google_sheets') and uploaded_file is not None and client:
-        insert_data_to_sheet(client, data, sheet_url)
-        st.success("Dados inseridos com sucesso no Google Sheets.")
+        if not filtered_data.empty:
+            insert_data_to_sheet(client, filtered_data, sheet_url)
+            st.success("Dados da data mais recente inseridos com sucesso no Google Sheets.")
+        else:
+            st.error("Não há dados da data mais recente para enviar.")
 
 if __name__ == '__main__':
     main()
+
 
 
 
