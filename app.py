@@ -41,18 +41,52 @@ def upload_file_to_drive(drive_service, filename, filepath, folder_id):
     return file.get('id')
 
 def main():
-    st.title("Upload e Inserção de Arquivo Excel no Google Sheets e Backup no Google Drive")
+    imagem = Image.open('bannerapp1.png')
+    st.image (imagem, caption='')
 
-    st.markdown("""
+    st.title(":blue[App para envio de dados do monitoramento da água]")
+
+     # CSS para personalizar os botões
+    button_style = """
     <style>
     .stButton>button {
         color: white;
         background-color: #084d6e;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: bold;
     }
     </style>
+    """
+    st.markdown(button_style, unsafe_allow_html=True)
+
+    
+    st.markdown("""
+    <style>
+        .reportview-container {
+            margin-top: -2em;
+        }
+        #MainMenu {visibility: hidden;}
+        .stDeployButton {display:none;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+        #stDecoration {display:none;}
+    </style>
     """, unsafe_allow_html=True)
+
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    st.markdown("""
+        <style>
+               .block-container {
+                    padding-top: 0.3rem;
+                    padding-bottom: 0rem;
+                    padding-left: 0.3rem;
+                    padding-right: 0.3rem;
+    
+                }
+                
+                
+        </style>
+        """, unsafe_allow_html=True)
 
     uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
     client, drive_service = authenticate_google_services()
