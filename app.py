@@ -48,9 +48,9 @@ def main():
 
     if uploaded_file is not None:
         data = pd.read_excel(uploaded_file, header=0)
-        data['Date'] = pd.to_datetime(data['Date']).dt.normalize()
-        today = pd.to_datetime('today').normalize()
-        filtered_data = data[data['Date'] == today]
+        data['Date'] = pd.to_datetime(data['Date']).dt.strftime('%d/%m/%Y')  # Converte para o formato brasileiro
+        today_str = datetime.now().strftime('%d/%m/%Y')  # Data atual no formato brasileiro
+        filtered_data = data[data['Date'] == today_str]  # Filtra pela data atual
         st.write("Dados filtrados do arquivo Excel para a data atual:")
         st.dataframe(filtered_data)
 
