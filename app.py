@@ -63,8 +63,13 @@ def main():
         with open("temp_file.xlsx", "wb") as f:
             f.write(uploaded_file.getbuffer())
         data = pd.read_excel("temp_file.xlsx", header=0)
-        st.write("Dados lidos do arquivo Excel:")
-        st.dataframe(data)
+        # Ordena e filtra pelo valor mais recente
+        data['Date'] = pd.to_datetime(data['Date'])
+        data.sort_values(by='Date', ascending=False, inplace=True)
+        most_recent_date = data['Date'].max()
+        filtered_data = data[data['Date'] == most_recent_date]
+        st.write("Dados filtrados do arquivo Excel para a data mais recente:")
+        st.dataframe(filtered_data)
 
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
     folder_id = '14-m18deS8QWYsSGSMFHq3Iyy_vPzQmUa'  # ID da pasta no Google Drive
@@ -73,9 +78,12 @@ def main():
         st.success("Conectado com sucesso ao Google Sheets.")
 
     if st.button("Enviar para Google Sheets e fazer backup no Drive", key='send_to_google_sheets_drive') and uploaded_file is not None:
-        insert_data_to_sheet(client, data, sheet_url)
-        file_id = upload_file_to_drive(drive_service, uploaded_file.name, "temp_file.xlsx", folder_id)
-        st.success(f"Dados inseridos com sucesso no Google Sheets e backup realizado no Google Drive. ID do arquivo: {file_id}")
+        if not filtered_data.empty:
+            insert_data_to_sheet(client, filtered_data, sheet_url)
+            file_id = upload_file_to_drive(drive_service, uploaded_file.name, "temp_file.xlsx", folder_id)
+            st.success(f"Dados da data mais recente inseridos com sucesso no Google Sheets e backup realizado no Google Drive. ID do arquivo: {file_id}")
+        else:
+            st.error("Não há dados da data mais recente para enviar.")
 
 if __name__ == '__main__':
     main()
