@@ -30,28 +30,29 @@ def insert_data_to_sheet(client, df, sheet_url):
 
 def main():
     st.title("Upload e Inserção de Arquivo Excel no Google Sheets")
-    
-    # CSS para personalizar os botões
     st.markdown("""
-        <style>
-        .stButton>button {
-            color: white;
-            background-color: #084d6e;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+    <style>
+    .stButton>button {
+        color: white;
+        background-color: #084d6e;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     client = None
     uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
 
     if uploaded_file is not None:
         data = pd.read_excel(uploaded_file, header=0)
-        # Supõe que 'Date' já está no formato string 'dd/mm/aaaa'
-        today_str = datetime.now().strftime('%d/%m/%Y')  # Formata a data atual para string no mesmo formato
-        filtered_data = data[data['Date'] == today_str]  # Filtra pela data atual
-        st.write("Dados filtrados do arquivo Excel para a data atual:")
+        # Ordena o DataFrame pela coluna 'Date'
+        data['Date'] = pd.to_datetime(data['Date'])
+        data.sort_values(by='Date', inplace=True)
+        # Filtra apenas as linhas com a data atual
+        today = pd.to_datetime('today').normalize()
+        filtered_data = data[data['Date'].dt.date == today.date()]
+        st.write("Dados filtrados do arquivo Excel para a data atual, ordenados por data:")
         st.dataframe(filtered_data)
 
     sheet_url = "https://docs.google.com/spreadsheets/d/1FPBeAXQBKy8noJ3bTF52p8JL_Eg-ptuSP6djDTsRfKE/edit#gid=0"
@@ -64,9 +65,13 @@ def main():
             st.error("Falha ao conectar ao Google Sheets.")
 
     if st.button("Enviar para Google Sheets") and uploaded_file is not None and client:
-        insert_data_to_sheet(client, filtered_data, sheet_url)
-        st.success("Dados inseridos com sucesso no Google Sheets.")
+        if not filtered_data.empty:
+            insert_data_to_sheet(client, filtered_data, sheet_url)
+            st.success("Dados correspondentes à data atual inseridos com sucesso no Google Sheets.")
+        else:
+            st.error("Não há dados para a data atual para inserir no Google Sheets.")
 
 if __name__ == '__main__':
     main()
+
 
