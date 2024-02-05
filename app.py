@@ -82,6 +82,15 @@ def main():
                 }               
         </style>
         """, unsafe_allow_html=True)
+    custom_css = """
+    <style>
+        .stFileUploader {
+            margin-bottom: -20px;
+        }
+    </style>
+    """
+    
+    st.markdown(custom_css, unsafe_allow_html=True)
     uploaded_file = st.file_uploader("SELECIONE ABAIXO O ARQUIVO", type=['xlsx', 'xls'])
     client, drive_service = authenticate_google_services()
 
