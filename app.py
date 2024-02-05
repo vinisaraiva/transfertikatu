@@ -50,8 +50,8 @@ def main():
         # Lê o arquivo Excel
         data = pd.read_excel(uploaded_file, header=0)
         # Filtra as linhas onde a data na coluna 'C' é igual à data atual
-        data['Date'] = pd.to_datetime(data['Date'])
-        today = pd.to_datetime('today').normalize()
+        data['Date'] = pd.to_datetime(data['Date']).dt.date
+        today = pd.to_datetime('today').date()
         filtered_data = data[data['Date'] == today]
         st.write("Dados filtrados do arquivo Excel para a data atual:")
         st.dataframe(filtered_data)
