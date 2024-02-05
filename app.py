@@ -104,9 +104,9 @@ def main():
     st.subheader('', divider='rainbow')
     col1, col2 = st.columns(2)
     with col1:
-        connect_button = st.button("Conectar ao Google Sheets", key='connect_google_sheets')
+        connect_button = st.button("CONECTAR", key='connect_google_sheets')
     with col2:
-        send_button = st.button("Enviar para Google Sheets e fazer backup no Drive", key='send_to_google_sheets_drive')
+        send_button = st.button("TRANSFERIR DADOS", key='send_to_google_sheets_drive')
 
     if connect_button:
         if client:
