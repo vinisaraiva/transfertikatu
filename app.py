@@ -84,7 +84,7 @@ def main():
                 #root > div:nth-child(1) > div > div > div > div > section > div {padding-bottom: 0rem;}
         </style>
         """, unsafe_allow_html=True)
-    st.subheader(":blue[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Envio dos dados coletados]")
+    st.subheader(":blue[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Envio dos dados coletados]")
 
     uploaded_file = st.file_uploader("SELECIONE ABAIXO O ARQUIVO", type=['xlsx', 'xls'])
     client, drive_service = authenticate_google_services()
