@@ -85,7 +85,7 @@ def main():
     custom_css = """
     <style>
         .stFileUploader {
-            margin-bottom: -20px;
+            margin-top: -20px;
         }
     </style>
     """
