@@ -43,7 +43,12 @@ def upload_file_to_drive(drive_service, filename, filepath, folder_id):
 def main():
     imagem = Image.open('bannerapp1.png')
     st.image (imagem, caption='')
-
+    hide_streamlit_style = """
+    <style>
+    #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 0rem;}
+    </style>
+    """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
     st.title(":blue[App para envio de dados do monitoramento da água]")
 
      # CSS para personalizar os botões
