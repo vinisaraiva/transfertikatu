@@ -88,7 +88,7 @@ def main():
         </style>
         """, unsafe_allow_html=True)
 
-    uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
+    uploaded_file = st.file_uploader("SELECIONE ABAIXO O ARQUIVO", type=['xlsx', 'xls'])
     client, drive_service = authenticate_google_services()
 
     if uploaded_file:
@@ -101,7 +101,7 @@ def main():
         filtered_data = data[data['Date'] == most_recent_date]
         st.write("Dados filtrados do arquivo Excel para a data mais recente:")
         st.dataframe(filtered_data)
-
+        st.subheader('', divider='rainbow')
     col1, col2 = st.columns(2)
     with col1:
         connect_button = st.button("Conectar ao Google Sheets", key='connect_google_sheets')
