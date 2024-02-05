@@ -90,7 +90,7 @@ def main():
 
     client, drive_service = authenticate_google_services()
 
-    uploaded_file = st.file_uploader("Escolha um arquivo Excel", type=['xlsx', 'xls'])
+    uploaded_file = st.file_uploader("<b>Escolha um arquivo Excel</b>", type=['xlsx', 'xls'])
 
     if uploaded_file is not None:
         # Salva o arquivo temporariamente
