@@ -85,7 +85,7 @@ def main():
                 #root > div:nth-child(1) > div > div > div > div > section > div {padding-bottom: 0rem;}
         </style>
         """, unsafe_allow_html=True)
-        st.title(":blue[App para envio de dados do monitoramento da água]")
+    st.title(":blue[App para envio de dados do monitoramento da água]")
 
     uploaded_file = st.file_uploader("SELECIONE ABAIXO O ARQUIVO", type=['xlsx', 'xls'])
     client, drive_service = authenticate_google_services()
