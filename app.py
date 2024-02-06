@@ -75,7 +75,7 @@ def main():
         <style>
                .block-container {
                     padding-top: 0.2rem;
-                    padding-bottom: 0rem;
+                    padding-bottom: 0.0rem;
                     padding-left: 0.3rem;
                     padding-right: 0.3rem;
     
