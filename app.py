@@ -60,7 +60,7 @@ def main():
     st.markdown("""
     <style>
         .reportview-container {
-            margin-top: 0.0rem;
+            margin-top: 0.5rem;
         }
         #MainMenu {visibility: hidden;}
         .stDeployButton {display:none;}
