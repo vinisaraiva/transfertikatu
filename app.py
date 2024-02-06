@@ -60,7 +60,7 @@ def main():
     st.markdown("""
     <style>
         .reportview-container {
-            margin-top: -2em;
+            margin-top: 0.0rem;
         }
         #MainMenu {visibility: hidden;}
         .stDeployButton {display:none;}
@@ -74,7 +74,7 @@ def main():
     st.markdown("""
         <style>
                .block-container {
-                    padding-top: 0.2rem;
+                    padding-top: 0.3rem;
                     padding-bottom: 0.0rem;
                     padding-left: 0.3rem;
                     padding-right: 0.3rem;
